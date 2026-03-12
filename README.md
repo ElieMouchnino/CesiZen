@@ -1,84 +1,224 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CESIZen
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web application designed to help users understand and manage their
+stress through educational content and a stress diagnostic tool.
 
-## About Laravel
+This project was developed as part of the CESI -- Concepteur
+Développeur d'Applications program, within the module:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Bloc 2 -- Développer et tester les applications informatiques
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+------------------------------------------------------------------------
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Project Overview
 
-## Learning Laravel
+CESIZen provides users with tools to better understand their stress
+levels and access reliable information about stress management.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The application includes:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Educational resources about stress\
+- A stress diagnostic questionnaire\
+- A personal user profile\
+- A history of diagnostic results\
+- An administration interface for managing content and diagnostic
+configuration
 
-## Laravel Sponsors
+------------------------------------------------------------------------
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Main Features
 
-### Premium Partners
+## User Accounts
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-   User registration
+-   Login / logout
+-   Password reset
+-   User profile
+-   Diagnostic history
 
-## Contributing
+## Information Pages
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   Educational content pages
+-   Categories for organizing resources
+-   Admin CRUD management
 
-## Code of Conduct
+## Stress Diagnostic
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   Questionnaire
+-   Score calculation
+-   Result interpretation
+-   Storage of results in user profile
 
-## Security Vulnerabilities
+------------------------------------------------------------------------
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Technology Stack
 
-## License
+Backend - PHP - Laravel
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Frontend - Blade Templates - HTML5 - CSS3 - JavaScript
 
+Visualization - Chart.js
 
+Database - SQLite (development)
 
+Architecture - MVC (Model View Controller)
 
-CESIZen
-│
-├── Comptes utilisateurs
-│   ├── register
-│   ├── login
-│   ├── logout
-│   ├── profile
-│   ├── reset mot de passe
-│   └── admin users
-│
-├── Informations
-│   ├── /pages
-│   ├── /pages/{slug}
-│   └── /admin/pages
-│
-└── Diagnostic de stress
-    ├── /diagnostic
-    ├── /diagnostic/result/{id}
-    ├── historique dans le profil
-    ├── /admin/diagnostic/questions
-    └── /admin/diagnostic/results
+ORM - Eloquent ORM
+
+------------------------------------------------------------------------
+
+# Application Architecture
+
+The project follows the MVC pattern:
+
+Model Represents business entities and handles database interactions.
+
+View Responsible for rendering the user interface.
+
+Controller Handles application logic and user interactions.
+
+------------------------------------------------------------------------
+
+# Core Data Model
+
+Main entities:
+
+User
+Page
+PageCategory
+DiagnosticQuestion
+DiagnosticSubmission
+DiagnosticAnswer
+DiagnosticResultRule
+
+Relationships:
+
+User -> DiagnosticSubmission\
+DiagnosticSubmission -> DiagnosticAnswer\
+DiagnosticQuestion -> DiagnosticAnswer\
+PageCategory -> Page
+
+------------------------------------------------------------------------
+
+# Installation Guide
+
+## 1 Install dependencies
+
+Make sure you have:
+
+-   PHP 8+
+-   Composer
+
+## 2 Clone the repository
+
+git clone `<repository-url>`{=html}
+
+cd cesizen
+
+## 3 Install dependencies
+
+composer install
+
+## 4 Configure environment
+
+Copy the environment file:
+
+cp .env.example .env
+
+Configure database settings if necessary.
+
+## 5 Run migrations
+
+php artisan migrate
+
+## 6 Start development server
+
+php artisan serve
+
+Application will run at:
+
+http://127.0.0.1:8000
+
+------------------------------------------------------------------------
+
+# Useful Laravel Commands
+
+Start server
+
+php artisan serve
+
+Run migrations
+
+php artisan migrate
+
+Create migration
+
+php artisan make:migration
+
+Create model
+
+php artisan make:model ModelName
+
+Create controller
+
+php artisan make:controller ControllerName
+
+List routes
+
+php artisan route:list
+
+Clear cache
+
+php artisan cache:clear
+
+------------------------------------------------------------------------
+
+# Admin Features
+
+Administrators can:
+
+- Manage information pages
+- Manage page categories
+- Manage users
+- Manage diagnostic questions
+- Manage diagnostic result rules
+
+------------------------------------------------------------------------
+
+# Diagnostic Workflow
+
+1 User opens diagnostic page
+2 Questions are loaded from database
+3 User answers questions
+4 Score is calculated
+5 Result rule is applied
+6 Result is displayed
+7 Submission is saved to user history
+
+------------------------------------------------------------------------
+
+# Security
+
+The application includes:
+
+- CSRF protection
+- Input validation
+- Role-based access control
+- Route protection using middleware
+
+------------------------------------------------------------------------
+
+# Future Improvements
+
+Possible future extensions:
+
+- Emotion tracking system
+- Relaxation activities catalog
+- Breathing exercises
+- Advanced analytics dashboard
+
+------------------------------------------------------------------------
+
+# Author
+
+Elie Mouchnino
