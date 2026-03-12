@@ -111,7 +111,7 @@ Make sure you have:
 
 ## 2 Clone the repository
 
-git clone `https://github.com/ElieMouchnino/CesiZen`{=html}
+git clone `https://github.com/ElieMouchnino/CesiZen`
 
 cd cesizen
 
