@@ -93,9 +93,9 @@ DiagnosticResultRule
 
 Relationships:
 
-User -> DiagnosticSubmission\
-DiagnosticSubmission -> DiagnosticAnswer\
-DiagnosticQuestion -> DiagnosticAnswer\
+User -> DiagnosticSubmission
+DiagnosticSubmission -> DiagnosticAnswer
+DiagnosticQuestion -> DiagnosticAnswer
 PageCategory -> Page
 
 ------------------------------------------------------------------------
