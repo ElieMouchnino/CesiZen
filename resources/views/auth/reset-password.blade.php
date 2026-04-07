@@ -11,24 +11,24 @@
     </ul>
 @endif
 
-<form method="POST" action="/reset-password">
+<form method="POST" action="{{ route('password.update') }}">
     @csrf
 
     <input type="hidden" name="token" value="{{ $token }}">
 
     <p>
         <label>Email</label><br>
-        <input type="email" name="email" value="{{ old('email') }}">
+        <input type="email" name="email" value="{{ old('email', $email ?? '') }}" required>
     </p>
 
     <p>
         <label>Nouveau mot de passe</label><br>
-        <input type="password" name="password">
+        <input type="password" name="password" required>
     </p>
 
     <p>
         <label>Confirmation du mot de passe</label><br>
-        <input type="password" name="password_confirmation">
+        <input type="password" name="password_confirmation" required>
     </p>
 
     <button type="submit">Réinitialiser le mot de passe</button>

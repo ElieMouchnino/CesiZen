@@ -15,12 +15,12 @@
     </ul>
 @endif
 
-<form method="POST" action="/forgot-password">
+<form method="POST" action="{{ route('password.email') }}">
     @csrf
 
     <p>
         <label>Email</label><br>
-        <input type="email" name="email" value="{{ old('email') }}">
+        <input type="email" name="email" value="{{ old('email') }}" required>
     </p>
 
     <button type="submit">Envoyer le lien de réinitialisation</button>
