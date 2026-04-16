@@ -6,6 +6,7 @@ use App\Models\DiagnosticAnswer;
 use App\Models\DiagnosticQuestion;
 use App\Models\DiagnosticResultRule;
 use App\Models\DiagnosticSubmission;
+use App\Services\DiagnosticScoringService;
 use Illuminate\Http\Request;
 
 class DiagnosticController extends Controller
@@ -19,7 +20,7 @@ class DiagnosticController extends Controller
         return view('diagnostic.form', compact('questions'));
     }
 
-    public function submit(Request $request)
+    public function submit(Request $request, DiagnosticScoringService $diagnosticScoringService)
     {
         $questions = DiagnosticQuestion::where('is_active', true)
             ->orderBy('sort_order')
@@ -38,7 +39,7 @@ class DiagnosticController extends Controller
             'total_score' => 0,
         ]);
 
-        $totalScore = 0;
+        $answers = [];
 
         foreach ($questions as $question) {
             $points = (int) $validated['question_' . $question->id];
@@ -49,8 +50,10 @@ class DiagnosticController extends Controller
                 'points' => $points,
             ]);
 
-            $totalScore += $points;
+            $answers[] = $points;
         }
+
+        $totalScore = $diagnosticScoringService->calculateTotalScore($answers);
 
         $submission->update([
             'total_score' => $totalScore,
