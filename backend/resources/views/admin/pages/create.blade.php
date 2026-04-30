@@ -3,8 +3,8 @@
 @section('content')
 <div class="admin-form-shell">
     <div class="admin-form-card">
-        <h2>Créer une rubrique</h2>
-        <p class="form-intro">Ajoutez une nouvelle rubrique pour structurer les contenus d’information.</p>
+        <h2>Créer une page</h2>
+        <p class="form-intro">Ajoutez une nouvelle page d’information.</p>
 
         @if($errors->any())
             <div class="alert" style="background:#fff4f2; border-color:#f2c3bc; color:#9f3c2f;">
@@ -16,12 +16,12 @@
             </div>
         @endif
 
-        <form method="POST" action="/admin/page-categories" data-confirm-leave="true">
+        <form method="POST" action="/admin/pages" data-confirm-leave="true">
             @csrf
 
             <div class="form-group">
-                <label for="name">Nom</label>
-                <input id="name" type="text" name="name" value="{{ old('name') }}">
+                <label for="title">Titre</label>
+                <input id="title" type="text" name="title" value="{{ old('title') }}">
             </div>
 
             <div class="form-group">
@@ -30,45 +30,45 @@
             </div>
 
             <div class="form-group">
-                <label for="parent_id">Rubrique parente</label>
-                <select id="parent_id" name="parent_id">
+                <label for="page_category_id">Rubrique</label>
+                <select id="page_category_id" name="page_category_id">
                     <option value="">Aucune</option>
-                    @foreach($parents as $parent)
-                        <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
-                            {{ $parent->name }}
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('page_category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="sort_order">Ordre</label>
-                <input id="sort_order" type="number" name="sort_order" value="{{ old('sort_order', 0) }}">
+                <label for="content">Contenu</label>
+                <textarea id="content" name="content">{{ old('content') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label>
-                    <input type="checkbox" name="is_active" checked>
-                    Rubrique active
+                    <input type="checkbox" name="is_published" {{ old('is_published') ? 'checked' : '' }}>
+                    Page publiée
                 </label>
             </div>
 
             <div class="admin-actions">
                 <button type="submit" class="nav-btn nav-btn-primary">Créer</button>
-                <a href="/admin/page-categories" class="nav-btn nav-btn-light">Annuler</a>
+                <a href="/admin/pages" class="nav-btn nav-btn-light">Annuler</a>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    const nameInput = document.getElementById('name');
+    const titleInput = document.getElementById('title');
     const slugInput = document.getElementById('slug');
 
-    if (nameInput && slugInput) {
-        nameInput.addEventListener('input', () => {
+    if (titleInput && slugInput) {
+        titleInput.addEventListener('input', () => {
             if (!slugInput.dataset.modified) {
-                slugInput.value = nameInput.value
+                slugInput.value = titleInput.value
                     .toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                     .replace(/[^a-z0-9]+/g, '-')
