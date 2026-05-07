@@ -1,98 +1,83 @@
-# Gestion de crise - CESIZen
+# Checklist sécurité - CESIZen
 
 ## 1. Objectif
 
-Ce document décrit la réaction prévue en cas d’incident important sur l’application CESIZen.
+Cette checklist sert à vérifier les points de sécurité essentiels avant une mise en production ou une livraison importante.
 
-L’objectif est de limiter l’impact sur les utilisateurs, de corriger rapidement le problème et de garder une trace de ce qui s’est passé.
+Elle permet de contrôler rapidement que l’application, la configuration, les données et l’environnement de déploiement respectent les bonnes pratiques prévues.
 
-## 2. Types d’incidents possibles
+## 2. Accès et authentification
 
-Les incidents peuvent être :
+- [ ] Les mots de passe sont chiffrés
+- [ ] Les utilisateurs non connectés ne peuvent pas accéder aux pages privées
+- [ ] Les routes administrateur sont protégées
+- [ ] Les rôles utilisateurs sont contrôlés
+- [ ] La déconnexion fonctionne correctement
+- [ ] La réinitialisation du mot de passe est vérifiée
 
-- bug bloquant
-- accès administrateur non autorisé
-- erreur après déploiement
-- perte ou corruption de données
-- suspicion de faille de sécurité
-- indisponibilité de l’application
+## 3. Données et RGPD
 
-## 3. Étapes de traitement
+- [ ] Les données collectées sont limitées au besoin de l’application
+- [ ] Le mot de passe n’est jamais stocké en clair
+- [ ] Les données du diagnostic sont protégées
+- [ ] L’utilisateur peut accéder à ses informations
+- [ ] La suppression d’un compte est prévue ou identifiée comme point d’amélioration
+- [ ] Le diagnostic est présenté comme un outil indicatif, pas comme un diagnostic médical
 
-En cas d’incident, les étapes sont les suivantes :
+## 4. Formulaires et entrées utilisateur
 
-1. Identifier le problème
-2. Vérifier l’environnement concerné
-3. Mesurer l’impact
-4. Consulter les logs
-5. Reproduire le problème si possible
-6. Corriger sur une branche dédiée
-7. Lancer les tests
-8. Déployer la correction
-9. Vérifier que l’application fonctionne
-10. Documenter l’incident
+- [ ] Les données sont validées côté serveur
+- [ ] Les formulaires sont protégés contre les attaques CSRF
+- [ ] Les erreurs de saisie sont gérées proprement
+- [ ] Les données affichées dans les vues sont échappées
 
-## 4. Qualification de la criticité
+## 5. Configuration
 
-| Niveau | Exemple | Action |
-|---|---|---|
-| Faible | problème d’affichage mineur | correction planifiée |
-| Moyen | fonctionnalité non bloquante en erreur | correction priorisée |
-| Élevé | connexion impossible ou diagnostic bloqué | correction urgente |
-| Critique | fuite de données ou accès non autorisé | réaction immédiate et rollback possible |
+- [ ] Le fichier `.env` n’est pas versionné
+- [ ] Le fichier `.env.example` est présent
+- [ ] Le mode debug est désactivé en production
+- [ ] Les variables sensibles ne sont pas exposées
+- [ ] Les messages d’erreur ne révèlent pas d’informations sensibles
 
-## 5. Logs à consulter
+## 6. Base de données
 
-Les logs Laravel se trouvent dans :
+- [ ] La base de données est sauvegardée avant une mise à jour
+- [ ] Les migrations sont testées
+- [ ] Les accès à la base ne sont pas exposés publiquement
+- [ ] Une procédure de restauration existe
 
-```txt
-backend/storage/logs/
-```
+## 7. Serveur et déploiement
 
-Ils permettent d’identifier :
+- [ ] Le serveur web pointe uniquement vers `backend/public`
+- [ ] HTTPS est prévu pour la production
+- [ ] Les ports ouverts sont limités
+- [ ] L’accès SSH est sécurisé
+- [ ] Les dépendances sont installées sans les outils de développement en production
 
-- l’heure de l’erreur
-- le message d’erreur
-- la route concernée
-- le contexte de l’incident
+## 8. Tests et CI
 
-## 6. Rollback
+- [ ] Les tests automatisés passent
+- [ ] La CI GitHub Actions est verte
+- [ ] Les migrations passent dans l’environnement de test
+- [ ] Les fonctionnalités principales sont vérifiées après déploiement
 
-Si une mise à jour provoque un problème important, il faut revenir à la dernière version stable.
+## 9. Logs et surveillance
 
-La version stable est identifiée par un tag Git, par exemple :
+- [ ] Les logs Laravel sont actifs
+- [ ] Les erreurs critiques sont surveillées
+- [ ] Les logs ne contiennent pas de mots de passe ou secrets
+- [ ] Les anomalies importantes sont reportées dans Trello
 
-```txt
-v1.0.0
-```
+## 10. Gestion d’incident
 
-Le rollback permet de rétablir rapidement une version fonctionnelle.
+- [ ] Une procédure de gestion de crise existe
+- [ ] Une procédure de rollback existe
+- [ ] Un tag stable est disponible
+- [ ] Les incidents importants sont documentés
+- [ ] Une action préventive est prévue après résolution
 
-## 7. Communication
+## 11. Conclusion
 
-En cas d’incident, il faut informer les personnes concernées avec des informations simples :
+Cette checklist permet de valider les principaux points de sécurité avant un déploiement.
 
-- nature du problème
-- impact constaté
-- action en cours
-- délai estimé de résolution si connu
-- confirmation une fois le problème corrigé
-
-## 8. Retour d’expérience
-
-Après résolution, l’incident doit être documenté.
-
-La fiche doit contenir :
-
-- date
-- problème rencontré
-- cause identifiée
-- correction appliquée
-- tests réalisés
-- action préventive à prévoir
-
-## 9. Conclusion
-
-La gestion de crise permet de réagir de manière structurée, sans corriger au hasard.
-
-Elle limite les risques et facilite la maintenance de l’application. 
+Elle sert aussi de support de contrôle lors de la maintenance ou après une évolution importante.
