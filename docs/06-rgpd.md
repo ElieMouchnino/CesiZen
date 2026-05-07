@@ -2,64 +2,86 @@
 
 ## 1. Objectif
 
-Ce document présente les éléments pris en compte concernant la protection des données personnelles dans l’application CESIZen.
+Ce document présente la manière dont CESIZen prend en compte la protection des données personnelles.
 
-L’objectif est de respecter les principes du RGPD : collecte minimale, sécurité des données et transparence.
+L’objectif est de limiter les données collectées, de sécuriser leur accès et de prévoir les droits des utilisateurs.
 
 ## 2. Données collectées
 
-L’application collecte uniquement les données nécessaires :
+L’application collecte uniquement les données nécessaires au fonctionnement du service :
 
 - email
-- mot de passe (chiffré)
+- mot de passe chiffré
 - réponses au diagnostic de stress
+- résultat du diagnostic
+- historique des diagnostics
 
-Aucune donnée sensible (santé détaillée, données médicales) n’est stockée.
+Le diagnostic proposé par CESIZen ne constitue pas un diagnostic médical. Il s’agit d’un outil indicatif destiné à aider l’utilisateur à mieux comprendre son niveau de stress.
 
-## 3. Finalité
+## 3. Finalité des données
 
 Les données sont utilisées pour :
 
-- permettre l’authentification
+- créer et gérer le compte utilisateur
+- permettre la connexion
 - enregistrer les résultats du diagnostic
-- afficher un historique utilisateur
+- afficher un historique à l’utilisateur
 
-## 4. Sécurité des données
+Les données ne sont pas utilisées à d’autres fins.
 
-Les mesures suivantes sont en place :
+## 4. Minimisation
 
-- mots de passe chiffrés
-- accès protégé aux comptes
-- routes sécurisées
-- validation des données
+Les données collectées sont limitées à ce qui est nécessaire pour le fonctionnement de l’application.
 
-## 5. Conservation des données
+Exemples :
+
+- le mot de passe n’est pas stocké en clair
+- aucune donnée médicale détaillée n’est demandée
+- seules les réponses utiles au diagnostic sont enregistrées
+
+## 5. Sécurité des données
+
+Les mesures de sécurité prévues sont :
+
+- mot de passe chiffré
+- accès au compte protégé par authentification
+- routes protégées
+- validation des données côté serveur
+- fichier `.env` non versionné
+- accès administrateur limité
+
+## 6. Conservation des données
 
 Les données sont conservées tant que le compte utilisateur existe.
 
-Une suppression de compte doit entraîner la suppression des données associées.
+En cas de suppression du compte, les données associées doivent également être supprimées ou anonymisées.
 
-## 6. Droits des utilisateurs
+## 7. Droits des utilisateurs
 
 L’utilisateur doit pouvoir :
 
-- accéder à ses données
-- modifier ses informations
+- accéder à ses informations
+- modifier son profil
 - demander la suppression de son compte
+- demander la suppression de ses données associées
 
-## 7. Limites
+## 8. Points de vigilance
 
-Dans le cadre de ce projet :
+Certains points peuvent être améliorés dans une version future :
 
-- toutes les fonctionnalités RGPD ne sont pas entièrement implémentées
-- certaines actions (suppression complète automatisée) pourraient être améliorées
+- ajouter une page dédiée à la politique de confidentialité
+- formaliser la demande de suppression des données
+- ajouter une durée de conservation plus précise
+- renforcer l’information donnée à l’utilisateur avant le diagnostic
 
-## 8. Conclusion
+## 9. Conclusion
 
-L’application respecte les principes de base du RGPD :
+CESIZen applique les principes de base du RGPD :
 
 - collecte limitée
-- sécurité des données
-- gestion des accès
+- finalité claire
+- accès sécurisé
+- données protégées
+- droits utilisateurs identifiés
 
-Des améliorations peuvent être apportées pour aller plus loin.
+Ces éléments permettent d’encadrer le traitement des données personnelles dans l’application.
