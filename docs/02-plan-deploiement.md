@@ -25,11 +25,45 @@ L’application suit une architecture MVC.
 
 ## 3. Environnements
 
-Trois environnements sont prévus :
+Trois environnements sont utilisés dans le projet.
 
-- développement : travail local sur le projet
-- test : validation avant mise en production
-- production : version stable
+### Développement
+
+L’environnement de développement correspond au poste local utilisé pour développer l’application.
+
+Le développement est réalisé sous Windows avec Laragon.
+
+Cet environnement permet :
+
+- le développement des fonctionnalités
+- les tests locaux
+- l’exécution des migrations
+- l’exécution des tests Laravel
+
+### Test
+
+L’environnement de test permet de valider les modifications avant mise en production.
+
+Il s’appuie sur :
+
+- la branche `test`
+- GitHub Actions
+- les tests automatisés Laravel
+
+Chaque modification est validée avant intégration sur la branche principale.
+
+### Production
+
+L’environnement de production correspond à l’environnement cible prévu pour l’application.
+
+Le déploiement cible est un serveur Linux de type VPS avec :
+
+- PHP 8.2
+- Composer
+- SQLite
+- Apache ou Nginx
+
+Même si aucun serveur distant n’est actuellement utilisé, la procédure de déploiement a été préparée pour un environnement réel.
 
 ## 4. Gestion des versions
 
@@ -70,6 +104,18 @@ Elle est configurée dans :
 
 Si un test échoue, la version n’est pas validée.
 
+### Gestion des versions
+
+Le projet utilise une stratégie de branches simple :
+
+develop → test → main
+
+- `develop` : développement des fonctionnalités
+- `test` : validation
+- `main` : version stable
+
+Cette organisation permet de limiter les risques avant mise en production.
+
 ## 6. Prérequis
 
 Pour déployer l’application, il faut :
@@ -79,6 +125,14 @@ Pour déployer l’application, il faut :
 - Git
 - SQLite
 - un serveur web Apache ou Nginx
+
+### Ressources nécessaires
+
+Le déploiement nécessite également :
+
+- un accès GitHub pour récupérer le projet
+- un accès SSH pour administrer le serveur
+- suffisamment d’espace disque pour l’application et la base SQLite
 
 ## 7. Déploiement
 
@@ -135,6 +189,10 @@ Tests automatisés :
 php artisan test
 ```
 
+La validation de l’environnement de test est également réalisée automatiquement via GitHub Actions.
+
+Cela permet de vérifier que l’application peut être installée et testée correctement sur un environnement propre.
+
 ## 10. Retour arrière
 
 En cas de problème, on revient à une version stable :
@@ -147,6 +205,10 @@ php artisan route:clear
 php artisan view:clear
 php artisan test
 ```
+
+Cette procédure permet de revenir rapidement à une version stable si une mise à jour provoque un incident.
+
+Le rollback limite l’impact d’une erreur de déploiement et réduit le temps d’indisponibilité.
 
 ## 11. Sauvegarde
 
