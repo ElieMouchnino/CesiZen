@@ -92,3 +92,5 @@ Cette documentation permet de garder un historique des incidents rencontrés.
 La procédure de rollback permet de revenir rapidement à une version stable en cas de problème.
 
 Elle réduit les risques liés aux mises à jour et améliore la continuité de service de l’application.
+
+Sur Railway, le rollback peut aussi consister à redéployer une version stable du dépôt, identifiée par un tag Git ou par un commit connu comme fonctionnel.

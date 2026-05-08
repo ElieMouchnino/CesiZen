@@ -2,231 +2,290 @@
 
 ## 1. Objectif
 
-Ce document explique comment déployer l’application CESIZen dans un environnement cible.
+Ce document décrit la stratégie de déploiement de l’application CESIZen.
 
-L’objectif est de pouvoir installer l’application de manière claire et reproductible, depuis la récupération du code jusqu’à la vérification du bon fonctionnement.
+L’objectif est de définir les outils, les environnements, les ressources et les étapes nécessaires afin de déployer l’application dans de bonnes conditions tout en limitant les risques.
 
-## 2. Architecture
+## 2. Présentation du projet
 
 CESIZen est une application web développée avec Laravel.
 
-Le projet est organisé comme suit :
+Le projet permet notamment :
 
-- `backend/` : application Laravel
-- `backend/app/` : logique métier
-- `backend/routes/` : routes
-- `backend/resources/views/` : interface Blade
-- `backend/database/` : migrations et base SQLite
-- `backend/tests/` : tests automatisés
-- `.github/workflows/` : CI GitHub Actions
-- `docs/` : documentation
+- la création de comptes utilisateurs
+- la connexion utilisateur
+- l’accès à des pages d’information
+- la réalisation d’un diagnostic de stress
+- l’historisation des résultats
 
-L’application suit une architecture MVC.
+Le projet repose sur :
 
-## 3. Environnements
-
-Trois environnements sont utilisés dans le projet.
-
-### Développement
-
-L’environnement de développement correspond au poste local utilisé pour développer l’application.
-
-Le développement est réalisé sous Windows avec Laragon.
-
-Cet environnement permet :
-
-- le développement des fonctionnalités
-- les tests locaux
-- l’exécution des migrations
-- l’exécution des tests Laravel
-
-### Test
-
-L’environnement de test permet de valider les modifications avant mise en production.
-
-Il s’appuie sur :
-
-- la branche `test`
+- Laravel
+- PHP
+- SQLite
+- GitHub
 - GitHub Actions
-- les tests automatisés Laravel
+- Trello
 
-Chaque modification est validée avant intégration sur la branche principale.
+## 3. Architecture de l’application
 
-### Production
+L’application suit une architecture MVC :
 
-L’environnement de production correspond à l’environnement cible prévu pour l’application.
+- Modèle : gestion des données
+- Vue : affichage des pages
+- Contrôleur : logique applicative
 
-Le déploiement cible est un serveur Linux de type VPS avec :
+Le dépôt GitHub est organisé autour du dossier :
 
-- PHP 8.2
+```txt
+backend/
+```
+
+Ce dossier contient :
+
+- le code Laravel
+- les vues Blade
+- les routes
+- les migrations
+- les tests
+- la configuration
+
+La documentation est séparée dans :
+
+```txt
+docs/
+```
+
+Cette organisation permet de distinguer :
+
+- le code applicatif
+- la documentation
+- les outils d’automatisation
+
+## 4. Solutions de déploiement envisagées
+
+Plusieurs solutions ont été étudiées pour le déploiement de CESIZen.
+
+| Solution | Avantages | Limites |
+|---|---|---|
+| Hébergement mutualisé PHP | simple et peu coûteux | peu flexible pour CI/CD |
+| VPS Linux classique | environnement réaliste et complet | administration serveur plus complexe |
+| Docker Compose | environnement reproductible et évolutif | plus technique à mettre en place |
+| Render | déploiement simplifié | nécessite souvent Docker |
+| Railway | intégration GitHub simple et rapide | dépendance à une plateforme externe |
+
+## 5. Solution retenue
+
+La solution retenue pour CESIZen est Railway.
+
+Ce choix a été retenu car :
+
+- il permet un déploiement depuis GitHub
+- il évite la gestion manuelle d’un serveur Linux
+- il reste adapté à un prototype Laravel
+- il permet de démontrer une procédure de déploiement réelle
+- il facilite la configuration des variables d’environnement
+
+Railway permet également :
+
+- de consulter les logs
+- de gérer les variables d’environnement
+- de générer une URL publique
+- de relancer un déploiement rapidement
+
+## 6. Environnements
+
+### Environnement de développement
+
+Utilisé pour :
+
+- développer les fonctionnalités
+- corriger les bugs
+- exécuter les tests localement
+
+Outils utilisés :
+
+- Laragon
+- PHP
 - Composer
 - SQLite
-- Apache ou Nginx
+- Git
 
-Même si aucun serveur distant n’est actuellement utilisé, la procédure de déploiement a été préparée pour un environnement réel.
+### Environnement de test
 
-## 4. Gestion des versions
+L’environnement de test correspond :
 
-Le projet utilise Git avec les branches suivantes :
+- à la branche `test`
+- à la validation des fonctionnalités
+- à l’exécution de la CI GitHub Actions
 
-- `develop` : développement
-- `test` : validation
-- `main` : version stable
+Cet environnement permet de vérifier :
 
-Le cycle est le suivant :
+- les tests automatisés
+- les migrations
+- la stabilité avant production
+
+### Environnement de production
+
+L’environnement de production correspond :
+
+- à la branche `main`
+- au déploiement Railway
+- à la version stable de l’application
+
+## 7. Gestion des versions
+
+Le projet utilise Git et GitHub.
+
+Les branches utilisées sont :
+
+- `develop`
+- `test`
+- `main`
+
+Workflow :
 
 ```txt
 develop -> test -> main
 ```
 
-Une version stable est identifiée avec un tag, par exemple :
+Rôle des branches :
+
+- `develop` : développement
+- `test` : validation
+- `main` : version stable
+
+Les versions stables sont identifiées avec des tags Git :
 
 ```txt
 v1.0.0
 ```
 
-## 5. Intégration continue
+Cette organisation permet de limiter les risques avant mise en production.
 
-Une CI est mise en place avec GitHub Actions.
+## 8. Intégration continue
 
-Elle est configurée dans :
+Le projet utilise GitHub Actions.
+
+La CI permet :
+
+- d’installer les dépendances
+- d’exécuter les tests Laravel
+- de vérifier la stabilité du projet
+
+Le workflow est défini dans :
 
 ```txt
 .github/workflows/laravel-ci.yml
 ```
 
-À chaque modification sur les branches principales, la CI :
+La CI doit être verte avant toute mise en production.
 
-- installe les dépendances
-- prépare l’environnement
-- lance les migrations
-- exécute les tests
+## 9. Ressources nécessaires
 
-Si un test échoue, la version n’est pas validée.
+Pour le développement local :
 
-### Gestion des versions
-
-Le projet utilise une stratégie de branches simple :
-
-develop → test → main
-
-- `develop` : développement des fonctionnalités
-- `test` : validation
-- `main` : version stable
-
-Cette organisation permet de limiter les risques avant mise en production.
-
-## 6. Prérequis
-
-Pour déployer l’application, il faut :
-
-- PHP 8.2 ou supérieur
+- PHP 8.2
 - Composer
 - Git
 - SQLite
-- un serveur web Apache ou Nginx
+- Laragon
 
-### Ressources nécessaires
+Pour le déploiement Railway :
 
-Le déploiement nécessite également :
+- compte GitHub
+- compte Railway
+- dépôt GitHub configuré
+- variables d’environnement Laravel
 
-- un accès GitHub pour récupérer le projet
-- un accès SSH pour administrer le serveur
-- suffisamment d’espace disque pour l’application et la base SQLite
+## 10. Variables d’environnement
 
-## 7. Déploiement
-
-Étapes principales :
-
-```bash
-cd /var/www
-git clone URL_DU_DEPOT cesizen
-cd cesizen/backend
-composer install --no-dev --optimize-autoloader
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate --force
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-Le serveur web doit pointer vers :
+Les variables sensibles sont stockées dans :
 
 ```txt
-/var/www/cesizen/backend/public
+.env
 ```
 
-## 8. Configuration
+Le fichier `.env` n’est jamais versionné.
 
-Le fichier `.env` contient la configuration de l’application.
-
-Il n’est pas versionné.
-
-Exemple pour SQLite :
+Variables importantes :
 
 ```txt
 APP_ENV=production
 APP_DEBUG=false
+APP_KEY=clé Laravel
+APP_URL=url Railway
 DB_CONNECTION=sqlite
-DB_DATABASE=database/database.sqlite
 ```
 
-## 9. Vérification
+Les variables sont configurées directement dans Railway.
 
-Après le déploiement, il faut vérifier :
+## 11. Procédure de déploiement
 
-- accès à la page d’accueil
-- inscription utilisateur
-- connexion
-- accès au diagnostic
-- protection des pages admin
+### Préparation
 
-Tests automatisés :
+Avant le déploiement :
 
-```bash
-php artisan test
-```
+- vérifier que la branche `main` est stable
+- vérifier que la CI GitHub Actions est verte
+- vérifier les tests
+- vérifier les migrations
+- vérifier les variables d’environnement
 
-La validation de l’environnement de test est également réalisée automatiquement via GitHub Actions.
+### Déploiement Railway
 
-Cela permet de vérifier que l’application peut être installée et testée correctement sur un environnement propre.
+Étapes :
 
-## 10. Retour arrière
+1. se connecter à Railway
+2. créer un projet
+3. connecter le dépôt GitHub
+4. sélectionner le dépôt CESIZen
+5. définir le dossier applicatif `backend`
+6. configurer les variables d’environnement
+7. lancer le déploiement
+8. générer le domaine public
+9. consulter les logs
+10. tester l’application
 
-En cas de problème, on revient à une version stable :
+## 12. Vérifications après déploiement
 
-```bash
-git checkout v1.0.0
-composer install --no-dev --optimize-autoloader
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-php artisan test
-```
+Après le déploiement :
 
-Cette procédure permet de revenir rapidement à une version stable si une mise à jour provoque un incident.
+- vérifier l’accès à l’application
+- vérifier la connexion utilisateur
+- vérifier le diagnostic
+- vérifier l’administration
+- vérifier les logs
+- vérifier l’absence d’erreurs critiques
 
-Le rollback limite l’impact d’une erreur de déploiement et réduit le temps d’indisponibilité.
+## 13. Sécurisation du déploiement
 
-## 11. Sauvegarde
+Plusieurs mesures sont appliquées :
 
-Avant chaque mise à jour, la base doit être sauvegardée :
+- séparation des branches Git
+- validation via CI
+- variables sensibles non versionnées
+- désactivation du mode debug
+- tests automatisés
+- procédure de rollback
 
-```bash
-cp database/database.sqlite database/backup.sqlite
-```
+## 14. Procédure de rollback
 
-## 12. Périmètre
+En cas de problème :
 
-Le projet est prêt à être déployé :
+- identifier la dernière version stable
+- revenir sur le tag Git stable
+- relancer le déploiement Railway
+- vérifier le retour à la normale
 
-- structure du dépôt propre
-- branches organisées
-- CI en place
-- tests fonctionnels
-- procédure de déploiement définie
-- procédure de rollback définie
+Le rollback permet de réduire le temps d’indisponibilité.
 
-La mise en ligne sur serveur peut se faire directement à partir de ce plan.
+## 15. Évolutions possibles
+
+Plusieurs évolutions pourront être envisagées :
+
+- remplacement SQLite par MySQL ou PostgreSQL
+- ajout de Docker
+- automatisation plus avancée du déploiement
+- surveillance avancée des logs
+- monitoring applicatif

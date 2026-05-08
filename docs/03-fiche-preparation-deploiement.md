@@ -38,12 +38,12 @@ Elle sert de contrôle rapide afin de limiter les erreurs et sécuriser le dépl
 
 ## 6. Serveur
 
-- [ ] PHP 8.2 est installé
-- [ ] Composer est installé
-- [ ] Git est installé
-- [ ] Le serveur web est configuré
-- [ ] Le serveur pointe vers `backend/public`
-- [ ] HTTPS est prévu pour la production
+- [ ] Le projet Railway est créé
+- [ ] Le dépôt GitHub est connecté à Railway
+- [ ] Les variables d’environnement sont configurées
+- [ ] Le dossier d’application `backend` est pris en compte
+- [ ] Le domaine public Railway est généré
+- [ ] Les logs de déploiement sont vérifiés
 
 ## 7. Sécurité
 

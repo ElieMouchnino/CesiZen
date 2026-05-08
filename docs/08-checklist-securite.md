@@ -46,13 +46,14 @@ Elle permet de contrôler rapidement que l’application, la configuration, les 
 - [ ] Les accès à la base ne sont pas exposés publiquement
 - [ ] Une procédure de restauration existe
 
-## 7. Serveur et déploiement
+## 7. Déploiement Railway
 
-- [ ] Le serveur web pointe uniquement vers `backend/public`
-- [ ] HTTPS est prévu pour la production
-- [ ] Les ports ouverts sont limités
-- [ ] L’accès SSH est sécurisé
-- [ ] Les dépendances sont installées sans les outils de développement en production
+- [ ] Le projet Railway est connecté au dépôt GitHub
+- [ ] Les variables d’environnement sont configurées dans Railway
+- [ ] `APP_DEBUG=false` est défini
+- [ ] Le domaine public est généré
+- [ ] Les logs Railway sont vérifiés
+- [ ] La CI GitHub Actions est verte avant déploiement
 
 ## 8. Tests et CI
 
