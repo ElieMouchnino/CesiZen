@@ -2,23 +2,25 @@
 
 ## 1. Objectif
 
-Ce document décrit comment revenir rapidement à une version stable de l’application en cas de problème après un déploiement.
+Ce document décrit la procédure permettant de revenir rapidement à une version stable de l’application en cas de problème après une mise à jour.
 
-L’objectif est de restaurer une version fonctionnelle sans perdre de temps.
+L’objectif est de limiter l’impact d’un incident et de rétablir rapidement une version fonctionnelle.
 
 ## 2. Quand utiliser le rollback
 
-Le rollback est utilisé dans les cas suivants :
+Le rollback peut être utilisé dans les situations suivantes :
 
 - bug bloquant après mise à jour
 - application inaccessible
-- erreur critique
+- erreur critique après déploiement
 - comportement inattendu
 - problème de sécurité
 
+Cette procédure permet de réduire le temps d’indisponibilité de l’application.
+
 ## 3. Principe
 
-Le projet utilise des tags Git pour identifier les versions stables.
+Le projet utilise des tags Git afin d’identifier les versions stables.
 
 Exemple :
 
@@ -26,18 +28,19 @@ Exemple :
 v1.0.0
 ```
 
-Le rollback consiste à revenir à une version stable identifiée.
+Le rollback consiste à revenir à une version stable validée.
 
-## 4. Étapes
+## 4. Étapes de rollback
 
-1. Identifier la dernière version stable
-2. Se placer sur cette version
-3. Réinstaller les dépendances
-4. Vérifier la configuration
-5. Tester l’application
-6. Redémarrer le service
+1. identifier la dernière version stable
+2. revenir sur le tag Git correspondant
+3. réinstaller les dépendances
+4. vérifier la configuration
+5. restaurer les données si nécessaire
+6. tester l’application
+7. confirmer le retour à la normale
 
-## 5. Commandes
+## 5. Commandes utilisées
 
 ```bash
 git checkout v1.0.0
@@ -48,25 +51,46 @@ php artisan view:clear
 php artisan test
 ```
 
+Ces commandes permettent de restaurer l’application dans un état stable.
+
 ## 6. Base de données
 
-Si nécessaire, restaurer une sauvegarde :
+Si une erreur impacte les données, une sauvegarde peut être restaurée :
 
 ```bash
 cp database/backup.sqlite database/database.sqlite
 ```
 
-## 7. Vérification
+Les sauvegardes doivent être réalisées avant chaque mise à jour importante.
 
-Après rollback, vérifier :
+## 7. Vérification après rollback
 
-- accès au site
+Après le rollback, plusieurs éléments doivent être vérifiés :
+
+- accès à l’application
 - connexion utilisateur
 - fonctionnement du diagnostic
 - accès administrateur
+- absence d’erreurs critiques
 
-## 8. Conclusion
+Les tests automatisés peuvent également être relancés afin de confirmer la stabilité du projet.
 
-La procédure de rollback permet de revenir rapidement à une version stable.
+## 8. Documentation de l’incident
 
-Elle limite les impacts en cas d’erreur lors d’un déploiement.
+Après le rollback, l’incident doit être documenté :
+
+- problème rencontré
+- impact observé
+- cause identifiée
+- actions réalisées
+- version restaurée
+
+Cette documentation permet de garder un historique des incidents rencontrés.
+
+## 9. Conclusion
+
+La procédure de rollback permet de revenir rapidement à une version stable en cas de problème.
+
+Elle réduit les risques liés aux mises à jour et améliore la continuité de service de l’application.
+
+Sur Railway, le rollback peut aussi consister à redéployer une version stable du dépôt, identifiée par un tag Git ou par un commit connu comme fonctionnel.

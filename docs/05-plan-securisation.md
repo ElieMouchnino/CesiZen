@@ -84,20 +84,17 @@ Le fichier `.env` contient les informations sensibles de configuration.
 
 Il n’est jamais versionné dans Git.
 
-## 8. Sécurité du serveur
+## 8. Sécurité de l’environnement de déploiement
 
-Sur un environnement de production, les bonnes pratiques suivantes doivent être appliquées :
+Sur Railway, la sécurité repose notamment sur :
 
-- utilisation de HTTPS
-- limitation des ports ouverts
-- accès SSH sécurisé
-- mises à jour régulières du serveur
+- la configuration des variables d’environnement dans l’interface Railway
+- la désactivation du mode debug en production
+- la vérification des logs de déploiement
+- l’exposition uniquement de l’application web
+- la génération d’une URL publique via Railway
 
-Le serveur web doit pointer uniquement vers :
-
-backend/public
-
-Cela évite d’exposer le reste du projet.
+Le fichier `.env` ne doit pas être versionné dans Git.
 
 ## 9. Gestion de crise
 
