@@ -1,0 +1,50 @@
+# LICENCE OUVERTE 2.0 / OPEN LICENCE 2.0
+
+## Réutilisation du projet CESIZen
+
+Le projet **CESIZen** est mis à disposition dans le cadre d’un projet pédagogique réalisé pour la formation Concepteur Développeur d’Applications.
+
+Cette licence permet la réutilisation libre et gratuite des informations et contenus associés au projet, à des fins commerciales ou non, dans le respect des conditions indiquées ci-dessous.
+
+Le réutilisateur est libre de :
+
+- Communiquer, reproduire et copier les informations
+- Adapter, modifier, extraire et transformer les informations
+- Diffuser, redistribuer, publier et transmettre les informations
+- Exploiter les informations dans un autre projet ou support
+
+## Conditions de réutilisation
+
+Toute réutilisation doit mentionner clairement la source du projet.
+
+Mention conseillée :
+
+Projet CESIZen - Elie Mouchnino - CESI - 2025/2026
+
+Cette mention ne doit pas laisser penser que le projet est un service officiel du Ministère de la Santé ou d’un organisme public.
+
+## Données personnelles
+
+Le projet CESIZen peut contenir des exemples de données liées aux utilisateurs, aux diagnostics ou aux comptes applicatifs.
+
+Toute réutilisation de données personnelles doit respecter le cadre légal applicable, notamment le Règlement Général sur la Protection des Données (RGPD).
+
+Aucune donnée personnelle réelle ne doit être publiée dans le dépôt GitHub.
+
+## Responsabilité
+
+Le projet est fourni tel quel, dans un cadre pédagogique.
+
+L’auteur ne garantit pas l’absence d’erreur, de faille ou de dysfonctionnement.
+
+Le réutilisateur est seul responsable de l’utilisation, de l’adaptation ou du déploiement du projet.
+
+## Droit applicable
+
+La présente licence est régie par le droit français.
+
+## À propos
+
+Cette licence s’inspire de la Licence Ouverte 2.0, utilisée pour faciliter la réutilisation libre des informations publiques.
+
+Le projet CESIZen n’est pas un service officiel de l’État. Il s’agit d’un projet de formation réalisé dans un contexte pédagogique.

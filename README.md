@@ -1,224 +1,285 @@
 # CESIZen
 
-A web application designed to help users understand and manage their
-stress through educational content and a stress diagnostic tool.
+## Présentation du projet
 
-This project was developed as part of the CESI -- Concepteur
-Développeur d'Applications program, within the module:
+CESIZen est une application web développée dans le cadre de la formation **Concepteur Développeur d'Applications (CESI)**.
 
-Bloc 2 -- Développer et tester les applications informatiques
+L'objectif du projet est d'aider les utilisateurs à mieux comprendre leur niveau de stress grâce à des contenus d'information et à un questionnaire d'auto-évaluation.
 
-------------------------------------------------------------------------
+Le projet a été réalisé dans le cadre du Bloc 2 : **Développer et tester les applications informatiques**, puis enrichi dans le cadre du Bloc 3 autour du déploiement, de la maintenance et de la sécurisation de l'application.
 
-# Project Overview
+---
 
-CESIZen provides users with tools to better understand their stress
-levels and access reliable information about stress management.
+## Objectifs du projet
 
-The application includes:
+L'application CESIZen répond à plusieurs objectifs :
 
-- Educational resources about stress\
-- A stress diagnostic questionnaire\
-- A personal user profile\
-- A history of diagnostic results\
-- An administration interface for managing content and diagnostic
-configuration
+- sensibiliser les utilisateurs aux problématiques liées au stress ;
+- proposer des contenus d'information accessibles ;
+- permettre la réalisation d'un diagnostic de stress ;
+- conserver l'historique des résultats obtenus ;
+- fournir une interface d'administration pour gérer les contenus et le questionnaire.
 
-------------------------------------------------------------------------
+---
 
-# Main Features
+## Fonctionnalités principales
 
-## User Accounts
+### Gestion des utilisateurs
 
--   User registration
--   Login / logout
--   Password reset
--   User profile
--   Diagnostic history
+- Inscription
+- Connexion et déconnexion
+- Réinitialisation du mot de passe
+- Gestion du profil utilisateur
+- Consultation de l'historique des diagnostics
 
-## Information Pages
+### Gestion des contenus
 
--   Educational content pages
--   Categories for organizing resources
--   Admin CRUD management
+- Consultation des pages d'information
+- Organisation des contenus par catégories
+- Gestion des pages depuis l'administration
 
-## Stress Diagnostic
+### Diagnostic de stress
 
--   Questionnaire
--   Score calculation
--   Result interpretation
--   Storage of results in user profile
+- Questionnaire de diagnostic
+- Calcul automatique du score
+- Interprétation du résultat
+- Enregistrement du diagnostic dans l'historique utilisateur
 
-------------------------------------------------------------------------
+### Administration
 
-# Technology Stack
+- Gestion des pages
+- Gestion des catégories
+- Gestion des utilisateurs
+- Gestion des questions du diagnostic
+- Gestion des règles de résultats
 
-Backend - PHP - Laravel
+---
 
-Frontend - Blade Templates - HTML5 - CSS3 - JavaScript
+## Architecture du projet
 
-Visualization - Chart.js
+L'application repose sur une architecture **MVC (Model - View - Controller)** avec Laravel.
 
-Database - SQLite (development)
+```text
+Utilisateur
+      ↓
+Routes Laravel
+      ↓
+Contrôleurs
+      ↓
+Modèles Eloquent
+      ↓
+Base de données SQLite
+      ↓
+Vues Blade
+```
 
-Architecture - MVC (Model View Controller)
+Cette organisation permet de séparer clairement :
 
-ORM - Eloquent ORM
+- la présentation des pages ;
+- la logique métier ;
+- l'accès aux données.
 
-------------------------------------------------------------------------
+Le projet est organisé autour d'un dossier principal `backend/`, qui contient l'application Laravel.
 
-# Application Architecture
+---
 
-The project follows the MVC pattern:
+## Choix d'architecture
 
-Model Represents business entities and handles database interactions.
+Le projet utilise une architecture monolithique Laravel.
 
-View Responsible for rendering the user interface.
+Ce choix est cohérent avec le besoin actuel du projet, car CESIZen est une application web centralisée dont les fonctionnalités sont fortement liées entre elles :
 
-Controller Handles application logic and user interactions.
+- comptes utilisateurs ;
+- contenus d'information ;
+- diagnostic ;
+- historique ;
+- administration.
 
-------------------------------------------------------------------------
+Toutes ces fonctionnalités partagent la même authentification, les mêmes droits d'accès et la même base de données.
 
-# Core Data Model
+Une séparation frontend / backend aurait nécessité une API REST, la gestion des échanges entre deux applications, une configuration CORS et deux déploiements distincts, sans apporter de valeur fonctionnelle immédiate au projet.
 
-Main entities:
+L'architecture reste cependant évolutive. Si le besoin apparaît plus tard, Laravel pourra exposer une API REST afin de permettre l'utilisation d'un frontend séparé ou d'une application mobile.
 
-User
-Page
-PageCategory
-DiagnosticQuestion
-DiagnosticSubmission
-DiagnosticAnswer
-DiagnosticResultRule
+---
 
-Relationships:
+## Technologies utilisées
 
-User -> DiagnosticSubmission
-DiagnosticSubmission -> DiagnosticAnswer
-DiagnosticQuestion -> DiagnosticAnswer
-PageCategory -> Page
+| Domaine | Technologie |
+|---|---|
+| Framework | Laravel |
+| Langage backend | PHP |
+| Frontend | Blade, HTML5, CSS3, JavaScript |
+| Base de données | SQLite |
+| ORM | Eloquent |
+| Build frontend | Vite |
+| Gestion de versions | Git / GitHub |
+| Intégration continue | GitHub Actions |
+| Déploiement | Railway |
+| Suivi projet | Trello |
 
-------------------------------------------------------------------------
+---
 
-# Installation Guide
+## Déploiement et CI/CD
 
-## 1 Install dependencies
+Le projet intègre une chaîne de déploiement simple et automatisée.
 
-Make sure you have:
+```text
+Développeur
+      ↓
+GitHub
+      ↓
+GitHub Actions
+      ↓
+Tests automatisés
+      ↓
+Railway
+      ↓
+Application en ligne
+```
 
--   PHP 8+
--   Composer
+GitHub Actions est utilisé pour l'intégration continue.
 
-## 2 Clone the repository
+Le workflow permet notamment :
 
-git clone `https://github.com/ElieMouchnino/CesiZen`
+- l'installation des dépendances PHP ;
+- l'installation des dépendances Node ;
+- la compilation des assets frontend ;
+- la préparation de l'environnement Laravel ;
+- l'exécution des migrations ;
+- le lancement des tests automatisés.
 
-cd cesizen
+Railway est utilisé pour l'hébergement et le déploiement de l'application.
 
-## 3 Install dependencies
+Les variables sensibles sont configurées dans Railway et ne sont pas stockées dans le dépôt GitHub.
+
+---
+
+## Organisation Git
+
+Le projet utilise plusieurs branches afin de mieux organiser les évolutions :
+
+| Branche | Rôle |
+|---|---|
+| `develop` | Développements et corrections en cours |
+| `test` | Validation fonctionnelle et technique |
+| `main` | Version stable et déployable |
+
+Des tags Git peuvent être utilisés pour identifier les versions stables du projet, par exemple :
+
+```text
+v1.0.0
+v1.0.1
+```
+
+---
+
+## Maintenance
+
+La maintenance du projet est organisée autour de trois types d'actions.
+
+### Maintenance corrective
+
+Correction des anomalies détectées après livraison ou lors de l'utilisation de l'application.
+
+### Maintenance évolutive
+
+Ajout de nouvelles fonctionnalités ou amélioration de fonctionnalités existantes.
+
+### Maintenance préventive
+
+Mise à jour des dépendances, amélioration du code, ajout de tests et renforcement de la sécurité.
+
+Le suivi des demandes, corrections et évolutions est réalisé avec Trello.
+
+---
+
+## Sécurité
+
+Plusieurs mécanismes de sécurité sont mis en place dans le projet :
+
+- authentification Laravel ;
+- middleware de protection des routes ;
+- contrôle des rôles utilisateurs ;
+- protection CSRF ;
+- validation des formulaires côté serveur ;
+- mots de passe hachés ;
+- variables d'environnement non versionnées ;
+- `APP_DEBUG` désactivé en production.
+
+Pour plus de détails, consulter le fichier :
+
+```text
+SECURITY.md
+```
+
+---
+
+## Installation locale
+
+### Prérequis
+
+- PHP 8.2 ou supérieur
+- Composer
+- Node.js
+- npm
+
+### Installation
+
+```bash
+git clone https://github.com/ElieMouchnino/CesiZen
+cd CesiZen/backend
 
 composer install
-
-## 4 Configure environment
-
-Copy the environment file:
+npm install
 
 cp .env.example .env
 
-Configure database settings if necessary.
-
-## 5 Run migrations
-
+php artisan key:generate
 php artisan migrate
 
-## 6 Start development server
+npm run build
 
 php artisan serve
+```
 
-Application will run at:
+L'application est ensuite accessible à l'adresse :
 
+```text
 http://127.0.0.1:8000
+```
 
-------------------------------------------------------------------------
+---
 
-# Useful Laravel Commands
+## Commandes utiles
 
-Start server
-
+```bash
 php artisan serve
-
-Run migrations
-
 php artisan migrate
-
-Create migration
-
-php artisan make:migration
-
-Create model
-
-php artisan make:model ModelName
-
-Create controller
-
-php artisan make:controller ControllerName
-
-List routes
-
+php artisan test
 php artisan route:list
-
-Clear cache
-
 php artisan cache:clear
+npm run build
+```
 
-------------------------------------------------------------------------
+---
 
-# Admin Features
+## Évolutions envisagées
 
-Administrators can:
+Plusieurs évolutions pourraient être envisagées :
 
-- Manage information pages
-- Manage page categories
-- Manage users
-- Manage diagnostic questions
-- Manage diagnostic result rules
+- amélioration du diagnostic ;
+- ajout de nouveaux contenus ;
+- statistiques avancées ;
+- amélioration de l'expérience utilisateur ;
+- ajout d'une API REST ;
+- séparation frontend / backend si le besoin le justifie ;
+- migration vers PostgreSQL ou MySQL pour une utilisation plus importante.
 
-------------------------------------------------------------------------
+---
 
-# Diagnostic Workflow
+## Auteur
 
-1 User opens diagnostic page
-2 Questions are loaded from database
-3 User answers questions
-4 Score is calculated
-5 Result rule is applied
-6 Result is displayed
-7 Submission is saved to user history
-
-------------------------------------------------------------------------
-
-# Security
-
-The application includes:
-
-- CSRF protection
-- Input validation
-- Role-based access control
-- Route protection using middleware
-
-------------------------------------------------------------------------
-
-# Future Improvements
-
-Possible future extensions:
-
-- Emotion tracking system
-- Relaxation activities catalog
-- Breathing exercises
-- Advanced analytics dashboard
-
-------------------------------------------------------------------------
-
-# Author
-
-Elie Mouchnino
+**Elie Mouchnino**  
+Formation Concepteur Développeur d'Applications - CESI  
+Année 2025/2026
